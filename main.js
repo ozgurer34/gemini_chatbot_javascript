@@ -8,8 +8,7 @@ const model = genAI.getGenerativeModel({ model: "gemini-pro" });
 
 let history = [];
 
-
-
+// user chat div
 export const userDiv = (data) => {
     const userMessage = {
       role: "user",
@@ -44,7 +43,6 @@ export const userDiv = (data) => {
     `;
   };
   
-
   async function getResponse(history) {
     const chat = await model.startChat({ history });
     const result = await chat.sendMessage('');
@@ -90,7 +88,7 @@ export const userDiv = (data) => {
     console.log(history);
   }
   
-  
+
 
 const chatForm = document.getElementById("chat-form");
 chatForm.addEventListener("submit", handleSubmit);
