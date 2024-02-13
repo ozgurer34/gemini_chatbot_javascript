@@ -719,13 +719,13 @@ video {
 .flex-1::-webkit-scrollbar-track
 {
 	-webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3);
-	background-color: #5db2ff;
+	background-color: #F5F5F5;
 }
 
 .flex-1::-webkit-scrollbar
 {
 	width: 10px;
-	background-color: #F5F5F5;
+	background-color: #5db2ff;
 }
 
 .flex-1::-webkit-scrollbar-thumb
@@ -744,13 +744,13 @@ video {
 body::-webkit-scrollbar-track
 {
 	-webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3);
-	background-color: #5db2ff;
+	background-color: #F5F5F5;
 }
 
 body::-webkit-scrollbar
 {
 	width: 10px;
-	background-color: #F5F5F5;
+	background-color: #5db2ff;
 }
 
 body::-webkit-scrollbar-thumb
@@ -765,3 +765,7 @@ body::-webkit-scrollbar-thumb
 											  transparent 75%,
 											  transparent)
 }
+
+
+		
+
