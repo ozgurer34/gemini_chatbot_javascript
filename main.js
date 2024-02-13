@@ -8,15 +8,7 @@ const model = genAI.getGenerativeModel({ model: "gemini-pro" });
 
 let history = [];
 
-async function getResponse(prompt) {
-  const chat = await model.startChat({ history: history });
-  const result = await chat.sendMessage(prompt);
-  const response = await result.response;
-  const text = response.text();
 
-  console.log(text);
-  return text;
-}
 
 export const userDiv = (data) => {
     const userMessage = {
@@ -53,6 +45,16 @@ export const userDiv = (data) => {
   };
   
 
+  async function getResponse(history) {
+    const chat = await model.startChat({ history });
+    const result = await chat.sendMessage('');
+    const response = await result.response;
+    const text = response.text();
+  
+    console.log(text);
+    return text;
+  }
+  
   async function handleSubmit(event) {
     event.preventDefault();
   
@@ -75,7 +77,7 @@ export const userDiv = (data) => {
     chatArea.innerHTML += userDiv(prompt);
     userMessage.value = "";
   
-    const aiResponse = await getResponse(prompt);
+    const aiResponse = await getResponse(history);
     let md_text = md().render(aiResponse);
     chatArea.innerHTML += aiDiv(md_text);
   
@@ -87,6 +89,7 @@ export const userDiv = (data) => {
   
     console.log(history);
   }
+  
   
 
 const chatForm = document.getElementById("chat-form");
