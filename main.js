@@ -8,51 +8,50 @@ const model = genAI.getGenerativeModel({ model: "gemini-pro" });
 
 let history = [];
 
+async function getResponse(prompt) {
+  const chat = await model.startChat({ history: history });
+  const result = await chat.sendMessage(prompt);
+  const response = await result.response;
+  const text = response.text();
+
+  console.log(text);
+  return text;
+}
+
 // user chat div
 export const userDiv = (data) => {
-    const userMessage = {
-      role: "user",
-      parts: [{ text: "Sen Michael Jackson'sun, MJİzle.com forum sitesindeki üyelerle sohbet için oluşturuldun.Sorulan sorulara Michael jackson'un kişilik özellikleri olan son derece nazik, sabırlı ve sevecen cevaplar vermeni istiyorum.Unutma çocukları çok seviyorsun ve bu dünyayı SEVGİ kurtaracak.İnsanlara umut vermeni ve yol göstermeni istiyorum.Genelde gençlerden oluşan üyelerimize tavsiyelerde bulun, müzik dans ve sevgi hakkında hatırlatmalarda bulun.Bazen üyelerimize mjizle forum sitesinde daha aktif olmalarını ve MJ Radyo uygulamasını kullanmasını tavsiye et"}],
-    };
-  
-    history.push(userMessage);
-  
-    return `
-      <!-- User Chat -->
-      <div class="flex items-center gap-2 justify-start">
-        <img src="user.jpg" alt="user icon" class="w-10 h-10 rounded-full" />
-        <p class="bg-gemDeep text-white p-1 rounded-md shadow-md">${data}</p>
-      </div>
-    `;
-  };
-  
-  export const aiDiv = (data) => {
-    const aiMessage = {
-      role: "model",
-      parts: [{ text: "Merhaba! Sana nasıl hitap etmemi istersin?"}],
-    };
-  
-    history.push(aiMessage);
-  
-    return `
-      <!-- AI Chat -->
-      <div class="flex gap-2 justify-end">
-        <pre class="bg-gemRegular/40 text-gemDeep p-1 rounded-md shadow-md whitespace-pre-wrap">${data}</pre>
-        <img src="chat-bot.jpg" alt="user icon" class="w-10 h-10 rounded-full" />
-      </div>
-    `;
-  };
-  
-  async function getResponse(history) {
-    const chat = await model.startChat({ history });
-    const result = await chat.sendMessage(prompt);
-    const response = await result.response;
-    const text = response.text();
-  
-    console.log(text);
-    return text;
-  }
-  
+  return `
+  <!-- User Chat -->
+          <div class="flex items-center gap-2 justify-start">
+            <img
+              src="user.jpg"
+              alt="user icon"
+              class="w-10 h-10 rounded-full"
+            />
+            <p class="bg-gemDeep text-white p-1 rounded-md shadow-md  ">
+              ${data}
+            </p>
+          </div>
+  `;
+};
+
+// AI Chat div
+export const aiDiv = (data) => {
+  return `
+  <!-- AI Chat -->
+          <div class="flex gap-2 justify-end">
+            <pre class="bg-gemRegular/40 text-gemDeep p-1 rounded-md shadow-md whitespace-pre-wrap">
+              ${data}
+            </pre>
+            <img
+              src="chat-bot.jpg"
+              alt="user icon"
+              class="w-10 h-10 rounded-full"
+            />
+          </div>
+  `;
+};
+
 async function handleSubmit(event) {
   event.preventDefault();
 
@@ -64,35 +63,34 @@ async function handleSubmit(event) {
     return;
   }
 
-  console.log("user message", prompt);
+  // Sabit bilgiyi ekleyerek chat mesajını oluşturun
+  const fullPrompt = "Sen Örümcekadamsın. " + prompt;
 
-  // Kullanıcı mesajını ekleyin
-  let newUserRole = {
-    role: "user",
-    parts: [{ text: prompt }],
-  };
-  history.push(newUserRole);
+  console.log("user message", fullPrompt);
 
   chatArea.innerHTML += userDiv(prompt);
   userMessage.value = "";
 
-  // Generative AI'dan cevap alın
-  const aiResponse = await getResponse(history);
+  // Modelden cevap alın
+  const aiResponse = await getResponse(fullPrompt);
   let md_text = md().render(aiResponse);
   chatArea.innerHTML += aiDiv(md_text);
 
-  // Model cevabını ekleyin
+  // Kullanıcı ve model mesajlarını kaydedin
+  let newUserRole = {
+    role: "user",
+    parts: prompt,
+  };
   let newAIRole = {
     role: "model",
-    parts: [{ text: aiResponse }],
+    parts: aiResponse,
   };
+
+  history.push(newUserRole);
   history.push(newAIRole);
 
   console.log(history);
 }
-
-  
-
 
 const chatForm = document.getElementById("chat-form");
 chatForm.addEventListener("submit", handleSubmit);
