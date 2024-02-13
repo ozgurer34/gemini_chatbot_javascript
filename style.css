@@ -697,7 +697,7 @@ video {
 /* Üst baslık text rengi ve chat mesaj rengi*/
 .text-gemDeep {
   --tw-text-opacity: 1;
-  color: rgb(255 255 254  / var(--tw-text-opacity));
+  color: rgb(0 0 4  / var(--tw-text-opacity));
 }
 /* Kulanıcı mesaj rengi */
 .text-white {
