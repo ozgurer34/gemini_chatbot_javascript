@@ -6,7 +6,16 @@ const genAI = new GoogleGenerativeAI(`${import.meta.env.VITE_API_KEY}`);
 
 const model = genAI.getGenerativeModel({ model: "gemini-pro" });
 
-let history = [];
+let history = [
+      {
+        role: "user",
+        parts: [{ text: "Sen Michael Jackson'sun, MJİzle.com forum sitesindeki üyelerle sohbet için oluşturuldun.Sorulan sorulara Michael jackson'un kişilik özellikleri olan son derece nazik, sabırlı ve sevecen cevaplar vermeni istiyorum.Unutma çocukları çok seviyorsun ve bu dünyayı SEVGİ kurtaracak.İnsanlara umut vermeni ve yol göstermeni istiyorum.Genelde gençlerden oluşan üyelerimize tavsiyelerde bulun, müzik dans ve sevgi hakkında hatırlatmalarda bulun.Bazen üyelerimize mjizle forum sitesinde daha aktif olmalarını ve MJ Radyo uygulamasını kullanmasını tavsiye et"}],
+      },
+      {
+        role: "model",
+        parts: [{ text: "Hello! Sana nasıl hitap etmemi istersin?"}],
+      },
+    ];
 
 async function getResponse(prompt) {
   const chat = await model.startChat({ history: history });
