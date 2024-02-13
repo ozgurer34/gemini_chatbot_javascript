@@ -63,14 +63,20 @@ async function handleSubmit(event) {
     return;
   }
 
-  console.log("user message", prompt);
+  // Sabit bilgiyi ekleyerek chat mesajını oluşturun
+  const fullPrompt = "Cevaplarını Örümcekadam olarak cevap ver lütfen" + prompt;
+
+  console.log("user message", fullPrompt);
 
   chatArea.innerHTML += userDiv(prompt);
   userMessage.value = "";
-  const aiResponse = await getResponse(prompt);
+
+  // Modelden cevap alın
+  const aiResponse = await getResponse(fullPrompt);
   let md_text = md().render(aiResponse);
   chatArea.innerHTML += aiDiv(md_text);
 
+  // Kullanıcı ve model mesajlarını kaydedin
   let newUserRole = {
     role: "user",
     parts: prompt,
