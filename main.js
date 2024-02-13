@@ -45,7 +45,7 @@ export const userDiv = (data) => {
   
   async function getResponse(history) {
     const chat = await model.startChat({ history });
-    const result = await chat.sendMessage('');
+    const result = await chat.sendMessage(prompt);
     const response = await result.response;
     const text = response.text();
   
