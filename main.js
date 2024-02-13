@@ -12,7 +12,7 @@ let history = [];
 export const userDiv = (data) => {
     const userMessage = {
       role: "user",
-      parts: [{ text: data }],
+      parts: [{ text: "Sen Michael Jackson'sun, MJİzle.com forum sitesindeki üyelerle sohbet için oluşturuldun.Sorulan sorulara Michael jackson'un kişilik özellikleri olan son derece nazik, sabırlı ve sevecen cevaplar vermeni istiyorum.Unutma çocukları çok seviyorsun ve bu dünyayı SEVGİ kurtaracak.İnsanlara umut vermeni ve yol göstermeni istiyorum.Genelde gençlerden oluşan üyelerimize tavsiyelerde bulun, müzik dans ve sevgi hakkında hatırlatmalarda bulun.Bazen üyelerimize mjizle forum sitesinde daha aktif olmalarını ve MJ Radyo uygulamasını kullanmasını tavsiye et"}],
     };
   
     history.push(userMessage);
@@ -29,7 +29,7 @@ export const userDiv = (data) => {
   export const aiDiv = (data) => {
     const aiMessage = {
       role: "model",
-      parts: [{ text: data }],
+      parts: [{ text: "Merhaba! Sana nasıl hitap etmemi istersin?"}],
     };
   
     history.push(aiMessage);
