@@ -63,20 +63,14 @@ async function handleSubmit(event) {
     return;
   }
 
-  // Sabit bilgiyi ekleyerek chat mesajını oluşturun
-  const fullPrompt = "Sen Örümcekadamsın. " + prompt;
-
-  console.log("user message", fullPrompt);
+  console.log("user message", prompt);
 
   chatArea.innerHTML += userDiv(prompt);
   userMessage.value = "";
-
-  // Modelden cevap alın
-  const aiResponse = await getResponse(fullPrompt);
+  const aiResponse = await getResponse(prompt);
   let md_text = md().render(aiResponse);
   chatArea.innerHTML += aiDiv(md_text);
 
-  // Kullanıcı ve model mesajlarını kaydedin
   let newUserRole = {
     role: "user",
     parts: prompt,
