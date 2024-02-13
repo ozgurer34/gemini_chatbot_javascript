@@ -53,40 +53,44 @@ export const userDiv = (data) => {
     return text;
   }
   
-  async function handleSubmit(event) {
-    event.preventDefault();
-  
-    let userMessage = document.getElementById("prompt");
-    const chatArea = document.getElementById("chat-container");
-  
-    var prompt = userMessage.value.trim();
-    if (prompt === "") {
-      return;
-    }
-  
-    console.log("user message", prompt);
-  
-    const newUserRole = {
-      role: "user",
-      parts: [{ text: prompt }],
-    };
-    history.push(newUserRole);
-  
-    chatArea.innerHTML += userDiv(prompt);
-    userMessage.value = "";
-  
-    const aiResponse = await getResponse(history);
-    let md_text = md().render(aiResponse);
-    chatArea.innerHTML += aiDiv(md_text);
-  
-    const newAIRole = {
-      role: "model",
-      parts: [{ text: aiResponse }],
-    };
-    history.push(newAIRole);
-  
-    console.log(history);
+async function handleSubmit(event) {
+  event.preventDefault();
+
+  let userMessage = document.getElementById("prompt");
+  const chatArea = document.getElementById("chat-container");
+
+  var prompt = userMessage.value.trim();
+  if (prompt === "") {
+    return;
   }
+
+  console.log("user message", prompt);
+
+  // Kullanıcı mesajını ekleyin
+  let newUserRole = {
+    role: "user",
+    parts: [{ text: prompt }],
+  };
+  history.push(newUserRole);
+
+  chatArea.innerHTML += userDiv(prompt);
+  userMessage.value = "";
+
+  // Generative AI'dan cevap alın
+  const aiResponse = await getResponse(history);
+  let md_text = md().render(aiResponse);
+  chatArea.innerHTML += aiDiv(md_text);
+
+  // Model cevabını ekleyin
+  let newAIRole = {
+    role: "model",
+    parts: [{ text: aiResponse }],
+  };
+  history.push(newAIRole);
+
+  console.log(history);
+}
+
   
 
 
